@@ -4,7 +4,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-class Spotify_client:
+class SpotifyClient:
     def __init__(self):
         self.sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
 
@@ -13,5 +13,6 @@ class Spotify_client:
         tracks = []
         for idx, track in enumerate(results['tracks']['items']):
             print((idx, track['artists'][0]['name'], track['name'], track['album']['release_date'], track['href']))
-            tracks.append((idx, track['artists'][0]['name'], track['name'], track['album']['release_date'], track['href']))
+            tracks.append((idx, track['artists'][0]['name'],
+                           track['name'], track['album']['release_date'], track['href']))
         return tracks
