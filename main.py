@@ -51,12 +51,12 @@ def get_date():
         try:
             date = pytz.utc.localize(parser.parse(input("Podaj datę od której mają być pobrane dane (DD/MM/YYYY): ")))
         except ValueError:
-            tryagain = input("Wrong input, want try again (Y/n)?")
-            if tryagain in ["Y", "y", ""]:
+            tryagain = input("Nieprawidłowe dane, chcesz sprobować znowu (T/n)?")
+            if tryagain in ["T", "t", ""]:
                 date = pytz.utc.localize(parser.parse("01/01/1900"))
             else:
                 quit(2)
-    print("You entered: {}".format(date))
+    print("Wprowadziłeś: {}".format(date))
     return date
 
 
@@ -65,14 +65,14 @@ def main():
     while source not in ["1", "2", "3", "Q", "q"]:
         source = input("Wybierz zrodło : \n1 - YouTube (authorized request), 2 - Youtube (no auth), 3 - Spotify: ")
         if source == "1":
-            print("You selected: YouTube (auth)")
+            print("Wybrałeś: YouTube (auth)")
             yt_client = YouTubeClientAuth()
             videos_list = yt_client.execute(get_date())
             write_to_file = save_to_a_file()
             if write_to_file != "":
                 write_dict_to_xlsx_file(videos_list, ("title", "publishedAt", "video_id"), write_to_file)
         elif source == "2":
-            print("You selected: YouTube (no auth)")
+            print("Wybrałeś: YouTube (no auth)")
             yt_client = YouTubeClientNoAuth()
             filter_date = get_date()
             query_string = input('Enter query string (default "Google Developers"): ')
@@ -83,12 +83,12 @@ def main():
             if write_to_file != "":
                 write_dict_to_xlsx_file(videos_list, ("title", "publishedAt", "video_id"), write_to_file)
         elif source == "3":
-            print("You selected: Spotify")
+            print("Wybrałeś: Spotify")
             sp_client = SpotifyClient()
-            artist = input("Specify artist name (default - Abba): ")
+            artist = input("Podaj naszwe twórca (default - Abba): ")
             if artist == "":
                 artist = "Abba"
-            date_range = input('Specify years range (default "1976-1979"): ')
+            date_range = input('Podaj zakres lat (default "1976-1979"): ')
             if date_range == "":
                 date_range = "1976-1979"
             tracks = sp_client.get_playlists(artist=artist, date_range=date_range)
@@ -96,7 +96,7 @@ def main():
             if write_to_file != "":
                 write_dict_to_xlsx_file(tracks, ('id', 'artists', 'track name', 'release_date', 'href'), write_to_file)
         else:
-            print("Nie prawidłowe dane! Please enter 1/2/3 or 'Q' for quit")
+            print("Nie prawidłowe dane! Naciśni 1/2/3 albo 'Q' żeby wyjsć")
     exit(0)
 
 

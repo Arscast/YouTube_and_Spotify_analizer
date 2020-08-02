@@ -72,7 +72,7 @@ class YouTubeClientAuth:
                 logging.debug(self.videosList)
                 return self.videosList
             else:
-                print('There is no uploaded videos playlist for this user.')
+                print('Nie ma żadnych przesłanych filmów dla tego użytkownika.')
         except HttpError as e:
             print('An HTTP error {:d} occurred:\n{:s}'.format(e.resp.status, e.content))
 
